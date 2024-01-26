@@ -1,8 +1,13 @@
 import React from 'react';
+import Banner from '../../components/Banner';
+import Advantages from '../../components/Advantages';
 
 function Main() {
   return (
-    <div>Main page</div>
+    <>
+      <Banner />
+      <Advantages />
+    </>
   );
 }
 
