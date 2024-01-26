@@ -9,6 +9,10 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+h1, h2, h3, p {
+    margin: 0;
+}
+
 img {
     display: block;
     max-width: 100%;
@@ -18,4 +22,13 @@ ul {
     margin: 0;
     padding: 0;
     list-style: none;
+}
+
+a {
+    display: block;
+    width: fit-content;
+}
+
+a:hover {
+    text-decoration: underline;
 }
