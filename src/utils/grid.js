@@ -4,14 +4,14 @@ export const Mediasize = {
   xs: '320',
   md: '768',
   lg: '992',
-  xl: '1200',
+  xl: '1200'
 };
 
 export const Breakpoint = {
   xs: `@media (min-width: ${Mediasize.xs}px)`,
   md: `@media (min-width: ${Mediasize.md}px)`,
   lg: `@media (min-width: ${Mediasize.lg}px)`,
-  xl: `@media (min-width: ${Mediasize.xl}px)`,
+  xl: `@media (min-width: ${Mediasize.xl}px)`
 };
 
 export const Container = styled.div`

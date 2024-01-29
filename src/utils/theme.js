@@ -7,6 +7,7 @@ export const Colors = {
   secondary_dark: '#0B0819',
   secondary_light: '#F4F4F4;',
   btn_color: '#29A643',
+  line: '#29A643',
   text: '#444444',
   warn: '#D51820',
   success: '#3C763D'

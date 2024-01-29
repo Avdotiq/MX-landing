@@ -50,20 +50,16 @@ const StyledBanner = styled.div`
   padding: 83px 0;
   color: ${Colors.primary};
   text-align: center;
-  background-color: ${Colors.primary_bg};
   background-image: url(${MOB_BG});
   background-size: contain;
   background-position: top center;
   background-repeat: no-repeat;
-  z-index: 1;
-  overflow: hidden;
 
   &::before {
     content: url(${PURP_MOB});
     position: absolute;
     top: 53px;
     left: 0;
-    z-index: -1;
   }
 
   &::after {
@@ -71,7 +67,6 @@ const StyledBanner = styled.div`
     position: absolute;
     right: 0;
     bottom: -170px;
-    z-index: -1;
   }
 
   ${Breakpoint.md} {
@@ -80,28 +75,26 @@ const StyledBanner = styled.div`
 
     &::before {
       content: url(${PURP_TB});
-      top: -580px;
-      left: -490px;
+      top: 0;
     }
 
     &::after {
       content: url(${GREEN_TB});
-      right: -550px;
-      bottom: -770px;
+      bottom: -460px;
     }
   }
 
   ${Breakpoint.xl} {
     padding: 121px 0 163px;
     background-image: url(${DES_BG});
-  }
 
-  &::before {
-    content: url(${PURP_DES});
-  }
+    &::before {
+      content: url(${PURP_DES});
+    }
 
-  &::after {
-    content: url(${GREEN_DES});
+    &::after {
+      content: url(${GREEN_DES});
+    }
   }
 `;
 
