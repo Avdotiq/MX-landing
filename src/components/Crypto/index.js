@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 import fetchData from '../../api/crypto';
 import { Colors } from '../../utils/theme';
 import { Breakpoint, Container } from '../../utils/grid';
-import { isPositiveNumber } from '../../utils/base';
 import ZERO from '../../assets/images/backgrounds/zero-mobile-bigger-tinted.png';
 import VECTOR_TB from '../../assets/images/backgrounds/vector_tb.png';
 import VECTOR_DES from '../../assets/images/backgrounds/vector_des.png';
