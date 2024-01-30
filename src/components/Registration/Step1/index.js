@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { Breakpoint } from '../../../utils/grid';
 import { Colors } from '../../../utils/theme';
 import { ErrorMessage } from '@hookform/error-message';
 
-const Step1 = ({ errors, register }) => {
-  const [date, setDate] = useState(null);
-
+const Step1 = ({ errors, register, control }) => {
   const validateDateOfBirth = value => {
     const currentDate = dayjs();
-    const birthDate = dayjs(value);
 
-    if (!birthDate.isValid()) {
+    if (!dayjs(value).isValid()) {
       return 'Invalid date format';
     }
 
-    const age = currentDate.diff(birthDate, 'years');
+    const age = currentDate.diff(value, 'years');
 
     if (age < 18) {
       return 'Must be at least 18 years old';
@@ -55,21 +53,39 @@ const Step1 = ({ errors, register }) => {
       <StyledGroup>
         <label>
           Date of Birth:
-          <StyledDateInput
-            {...register('dob', {
-              required: 'Field is required',
-              validate: validateDateOfBirth
-            })}
-            value={date ? date : ''}
-            label='Dade of birthday'
+          <Controller
+            label='Date'
+            control={control}
+            defaultValue={null}
+            name='date'
+            rules={{
+              validate: {
+                range: date => validateDateOfBirth(date)
+              }
+            }}
+            render={({
+              field: { ref, onBlur, name, onChange, ...field },
+              fieldState
+            }) => (
+              <StyledDatePicker
+                {...field}
+                inputRef={ref}
+                label=''
+                value={field.value || null}
+                onChange={onChange}
+                slotProps={{
+                  textField: {
+                    required: true,
+                    onBlur,
+                    name,
+                    error: !!fieldState?.error,
+                    helperText: fieldState?.error?.message
+                  }
+                }}
+              />
+            )}
           />
-          <StyledDatePicker onChange={value => console.log(value)} />
         </label>
-        <ErrorMessage
-          errors={errors}
-          name='dob'
-          render={({ message }) => <p>{message}</p>}
-        />
       </StyledGroup>
     </StyledStep>
   );
@@ -116,10 +132,6 @@ const StyledGroup = styled.div`
     font-size: 11px;
     color: ${Colors.warn};
   }
-`;
-
-const StyledDateInput = styled.input`
-  display: none;
 `;
 
 const StyledDatePicker = styled(DatePicker)`

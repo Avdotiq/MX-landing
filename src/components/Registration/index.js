@@ -7,19 +7,27 @@ import { Breakpoint, Container } from '../../utils/grid';
 import styled from 'styled-components';
 import { Colors } from '../../utils/theme';
 import Success from './Success';
+import Loading from './Loading';
 
 const Registration = () => {
   const {
     register,
+    control,
     formState: { errors, isValid },
     handleSubmit
-  } = useForm({ criteriaMode: 'all' });
+  } = useForm({ mode: 'onChange' });
   const [activeStep, setActiveStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleNextStep = () => {
     if (activeStep === 2) {
-      setIsSubmitted(true);
+      setLoading(true);
+
+      setTimeout(() => {
+        setLoading(false);
+        setIsSubmitted(true);
+      }, 2000);
     } else {
       setActiveStep(activeStep + 1);
     }
@@ -28,24 +36,25 @@ const Registration = () => {
   return (
     <Container>
       <StyledRegistration>
-        <ProgressBar isValid={isValid} activeStep={activeStep} />
-        <StyledForm onSubmit={handleSubmit(handleNextStep)}>
-          {isSubmitted ? (
-            <Success />
-          ) : (
-            <>
+        {isSubmitted ? (
+          <Success />
+        ) : (
+          <>
+            {loading && <Loading />}
+            <ProgressBar isValid={isValid} activeStep={activeStep} />
+            <form onSubmit={handleSubmit(handleNextStep)}>
               {activeStep === 1 && (
-                <Step1 register={register} errors={errors} />
+                <Step1 register={register} errors={errors} control={control} />
               )}
               {activeStep === 2 && (
                 <Step2 register={register} errors={errors} />
               )}
-            </>
-          )}
-          <StyledButton type='submit' disabled={!isValid}>
-            {activeStep > 1 ? 'Register now' : 'Continue'}
-          </StyledButton>
-        </StyledForm>
+              <StyledButton type='submit' disabled={!isValid}>
+                {activeStep > 1 ? 'Register now' : 'Continue'}
+              </StyledButton>
+            </form>
+          </>
+        )}
       </StyledRegistration>
     </Container>
   );
@@ -56,24 +65,20 @@ export default Registration;
 const StyledRegistration = styled.div`
   position: relative;
   z-index: 1;
-  padding: 0 15px;
-  margin: auto;
+  margin: 25px auto;
   max-width: 455px;
 
+  ${Breakpoint.md} {
+    margin: 40px auto 25px;
+  }
+
   ${Breakpoint.lg} {
+    margin: 45px auto 33px;
     max-width: 825px;
   }
-`;
 
-const StyledForm = styled.form`
-  margin: 25px 0;
-
-  ${Breakpoint.md} {
-    margin: 40px 0 25px;
-  }
-
-  ${Breakpoint.lg} {
-    margin: 45px 0 33px;
+  form {
+    margin-top: 30px;
   }
 `;
 
